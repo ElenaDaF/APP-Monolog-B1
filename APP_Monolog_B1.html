@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>B1 Deutsch Monolog - Toon Edition</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --toon-yellow: #FFDE00;
+            --toon-cyan: #00E5FF;
+            --toon-magenta: #FF0055;
+            --toon-green: #00E676;
+            --toon-orange: #FF6D00;
+            --toon-black: #111111;
+        }
+
+        body {
+            font-family: 'Comic Neue', cursive;
+            background-color: var(--toon-cyan);
+            /* Halftone dots background effect */
+            background-image: radial-gradient(var(--toon-black) 15%, transparent 16%), radial-gradient(var(--toon-black) 15%, transparent 16%);
+            background-size: 30px 30px;
+            background-position: 0 0, 15px 15px;
+            color: var(--toon-black);
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, .bangers-font {
+            font-family: 'Bangers', cursive;
+            letter-spacing: 2px;
+        }
+
+        .toon-card {
+            background-color: white;
+            border: 6px solid var(--toon-black);
+            border-radius: 16px;
+            box-shadow: 10px 10px 0px var(--toon-black);
+            position: relative;
+            z-index: 10;
+        }
+
+        .toon-btn {
+            font-family: 'Bangers', cursive;
+            text-transform: uppercase;
+            font-size: 1.5rem;
+            border: 5px solid var(--toon-black);
+            border-radius: 12px;
+            box-shadow: 6px 6px 0px var(--toon-black);
+            transition: all 0.1s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            letter-spacing: 1px;
+        }
+
+        .toon-btn:active:not(:disabled) {
+            transform: translate(4px, 4px);
+            box-shadow: 2px 2px 0px var(--toon-black);
+        }
+
+        .toon-btn:disabled {
+            filter: grayscale(100%);
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: 6px 6px 0px var(--toon-black);
+        }
+
+        /* Comic Starburst element */
+        .starburst {
+            position: absolute;
+            background: var(--toon-yellow);
+            width: 120px;
+            height: 120px;
+            text-align: center;
+            line-height: 120px;
+            font-family: 'Bangers', cursive;
+            font-size: 2rem;
+            color: var(--toon-black);
+            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+            animation: spin 10s linear infinite;
+            z-index: 20;
+            border: 4px solid black; /* Fallback */
+        }
+        
+        .starburst-container {
+            position: absolute;
+            top: -40px;
+            right: -40px;
+            filter: drop-shadow(4px 4px 0px black);
+            z-index: 20;
+        }
+
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+        @keyframes pulse-bounce {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1) rotate(3deg); }
+        }
+        .animate-toon-bounce { animation: pulse-bounce 1s infinite; }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 12px; }
+        ::-webkit-scrollbar-track { background: var(--toon-yellow); border-left: 4px solid black; }
+        ::-webkit-scrollbar-thumb { background: var(--toon-magenta); border: 3px solid black; border-radius: 10px; }
+
+        .speech-bubble {
+            position: relative;
+            background: white;
+            border-radius: .4em;
+            border: 5px solid black;
+        }
+        .speech-bubble:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border: 20px solid transparent;
+            border-top-color: black;
+            border-bottom: 0;
+            border-left: 0;
+            margin-left: -10px;
+            margin-bottom: -25px;
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8 min-h-screen">
+
+    <div class="max-w-[1400px] mx-auto relative w-full">
+        
+        <!-- Decoration -->
+        <div class="starburst-container hidden md:block">
+            <div class="starburst" style="animation-duration: 15s;">B1!</div>
+        </div>
+
+        <!-- Header -->
+        <header class="mb-10 text-center relative z-10">
+            <div class="inline-block bg-white p-4 border-8 border-black transform -rotate-3 shadow-[12px_12px_0px_#FF0055]">
+                <h1 class="text-5xl md:text-7xl text-yellow-400 drop-shadow-[4px_4px_0px_#111]">
+                    DEUTSCH-MONOLOG
+                </h1>
+                <p class="text-2xl font-bold mt-2 bangers-font text-blue-600">Sprich, nimm auf und lerne! 🎙️💥</p>
+            </div>
+        </header>
+
+        <!-- Main Layout -->
+        <main class="grid grid-cols-1 lg:grid-cols-4 gap-6 relative z-10">
+            
+            <!-- Left Column: Themes -->
+            <div class="lg:col-span-1">
+                <div class="toon-card p-4 bg-[var(--toon-yellow)] lg:h-[650px] flex flex-col">
+                    <h2 class="text-2xl mb-4 bg-white inline-block px-3 py-1 border-4 border-black transform rotate-2">🎯 THEMA WÄHLEN</h2>
+                    <div id="theme-list" class="space-y-3 overflow-y-auto pr-2 flex-grow font-bold text-sm">
+                        <!-- Themes injected by JS -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Middle Column: Leitfragen & Recorder -->
+            <div class="lg:col-span-2 flex flex-col lg:h-[650px] gap-6">
+                
+                <!-- Leitfragen (Guide Questions) -->
+                <div class="toon-card p-4 lg:p-6 bg-white speech-bubble flex-shrink-0 z-20">
+                    <h2 class="text-2xl text-[var(--toon-magenta)] mb-2">❓ LEITFRAGEN:</h2>
+                    <p id="selected-theme-title" class="font-bold text-xl mb-2 bg-[var(--toon-cyan)] inline-block px-2 border-2 border-black">Wähle links ein Thema aus</p>
+                    <ul id="questions-list" class="list-disc ml-8 space-y-1 text-lg font-bold">
+                        <li>Hier erscheinen die Leitfragen für deinen 2-minütigen Monolog.</li>
+                    </ul>
+                </div>
+
+                <!-- The Recorder Machine -->
+                <div class="toon-card p-6 bg-[var(--toon-orange)] border-8 border-black text-center relative flex-grow flex flex-col justify-center z-10">
+                    <h2 class="text-3xl text-white drop-shadow-[2px_2px_0px_#000] mb-4">🎙️ AUFNAHME-MASCHINE</h2>
+                    
+                    <!-- Timer -->
+                    <div class="bg-white border-4 border-black rounded-full w-36 h-36 mx-auto flex flex-col items-center justify-center shadow-[inset_4px_4px_0px_rgba(0,0,0,0.1)] mb-6 relative">
+                        <span id="timer-text" class="text-4xl bangers-font text-[var(--toon-black)]">02:00</span>
+                        <span class="text-sm font-bold">MINUTEN</span>
+                        <div id="timer-bar" class="absolute bottom-0 left-0 h-3 bg-[var(--toon-magenta)] w-full transition-all duration-1000 origin-left" style="transform: scaleX(1);"></div>
+                    </div>
+
+                    <!-- Controls -->
+                    <div class="flex justify-center gap-3 flex-wrap">
+                        <button id="btn-record" onclick="startRecording()" class="toon-btn bg-[var(--toon-green)] text-white px-4 py-3 flex items-center gap-2 text-xl">
+                            <span>⏺</span> REC!
+                        </button>
+                        <button id="btn-stop" onclick="stopRecording()" disabled class="toon-btn bg-gray-400 text-white px-4 py-3 flex items-center gap-2 text-xl">
+                            <span>⏹</span> STOP!
+                        </button>
+                        <button id="btn-play" onclick="playRecording()" disabled class="toon-btn bg-[var(--toon-cyan)] text-white px-4 py-3 flex items-center gap-2 text-xl">
+                            <span>▶️</span> PLAY!
+                        </button>
+                    </div>
+
+                    <!-- Big Feedback Button -->
+                    <div class="mt-6">
+                        <button id="btn-feedback" onclick="getFeedback()" disabled class="toon-btn bg-[var(--toon-yellow)] text-black px-6 py-4 text-2xl w-full max-w-sm mx-auto block">
+                            🤖 MAGISCHES FEEDBACK! 🪄
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Right Column: Sprechhilfe -->
+            <div class="lg:col-span-1">
+                <div class="toon-card p-4 bg-[var(--toon-cyan)] lg:h-[650px] flex flex-col">
+                    <h2 class="text-2xl mb-4 bg-[var(--toon-magenta)] text-white inline-block px-3 py-1 border-4 border-black transform -rotate-2">💡 REDEMITTEL</h2>
+                    <div class="space-y-4 overflow-y-auto pr-2 flex-grow">
+                        <div class="bg-white p-3 border-4 border-black rounded-lg shadow-[4px_4px_0px_#000] text-black">
+                            <h3 class="bangers-font text-xl text-[var(--toon-magenta)] mb-1">🎤 Einleitung</h3>
+                            <ul class="space-y-1 text-sm font-bold">
+                                <li>• Ich möchte über das Thema ... sprechen.</li>
+                                <li>• Mein Thema lautet: ...</li>
+                                <li>• Das ist ein wichtiges Thema, weil...</li>
+                            </ul>
+                        </div>
+                        <div class="bg-white p-3 border-4 border-black rounded-lg shadow-[4px_4px_0px_#000] text-black">
+                            <h3 class="bangers-font text-xl text-[var(--toon-orange)] mb-1">🔗 Konnektoren</h3>
+                            <ul class="space-y-1 text-sm font-bold">
+                                <li>• <strong>Weil / Dass:</strong> Verb am ENDE!</li>
+                                <li>• <strong>Deshalb / Trotzdem:</strong> Position 2!</li>
+                                <li>• <strong>Einerseits ... andererseits</strong></li>
+                                <li>• Außerdem, danach, zuerst...</li>
+                            </ul>
+                        </div>
+                        <div class="bg-white p-3 border-4 border-black rounded-lg shadow-[4px_4px_0px_#000] text-black">
+                            <h3 class="bangers-font text-xl text-[var(--toon-green)] mb-1">🏁 Schluss</h3>
+                            <ul class="space-y-1 text-sm font-bold">
+                                <li>• Zusammenfassend kann man sagen, dass...</li>
+                                <li>• Meine persönliche Meinung ist...</li>
+                                <li>• Vielen Dank fürs Zuhören!</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+
+        <!-- Feedback UI (Hidden by default) -->
+        <div id="feedback-section" class="hidden mt-12 relative z-10">
+            <div class="toon-card p-8 bg-[var(--toon-black)] text-white border-8 border-[var(--toon-yellow)]">
+                <h2 class="text-6xl text-[var(--toon-yellow)] drop-shadow-[4px_4px_0px_#FF0055] mb-6 text-center animate-toon-bounce">BOOM! DEIN FEEDBACK</h2>
+                
+                <div id="feedback-loading" class="hidden text-center py-10">
+                    <div class="text-4xl bangers-font text-[var(--toon-cyan)] animate-pulse">⚙️ Das KI-Gehirn denkt nach und prüft die offizielle B1-Bewertungsskala... ⚙️</div>
+                </div>
+
+                <div id="feedback-content" class="text-xl space-y-6 font-bold font-sans">
+                    <!-- AI Content goes here -->
+                </div>
+
+                <div class="text-center mt-10">
+                    <button onclick="resetApp()" class="toon-btn bg-[var(--toon-magenta)] text-white px-8 py-4">🔄 NOCHMAL! (Neu starten)</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Application Script -->
+    <script>
+        const apiKey = ""; // API key se inyecta automáticamente
+        const DURATION = 120; // 2:00 en segundos
+        let timerInterval;
+        let timeLeft = DURATION;
+        
+        let mediaRecorder;
+        let audioChunks = [];
+        let audioUrl = null;
+        
+        let recognition;
+        let transcript = "";
+        let isRecording = false;
+
+        // 17 Temáticas B1
+        const THEMES = [
+            { id: 1, title: "Personalien", questions: ["Wie beschreibst du dich selbst?", "Was sind deine Stärken und Schwächen?", "Was ist dir im Leben besonders wichtig?"] },
+            { id: 2, title: "Feste", questions: ["Welches Fest ist in deinem Land am wichtigsten?", "Wie hast du deinen letzten Geburtstag gefeiert?", "Sind Traditionen heute noch aktuell?"] },
+            { id: 3, title: "Freizeit", questions: ["Was machst du am liebsten am Wochenende?", "Haben die Menschen heute genug Freizeit?", "Welche Hobbys sind in deinem Land sehr beliebt?"] },
+            { id: 4, title: "Familie und Freunde", questions: ["Wie wichtig ist die Familie für dich persönlich?", "Was macht einen guten Freund aus?", "Wohnen junge Leute in deinem Land lange bei den Eltern?"] },
+            { id: 5, title: "Menschliche und soziale Beziehungen", questions: ["Wie lernst du am besten neue Leute kennen?", "Welche Rolle spielen Nachbarn in deinem Leben?", "Wie haben sich Beziehungen durch das Internet verändert?"] },
+            { id: 6, title: "Arbeit und Beruf", questions: ["Was ist dein absoluter Traumberuf?", "Ist ein hohes Gehalt wichtiger als Spaß bei der Arbeit?", "Wie sieht der aktuelle Arbeitsmarkt in deinem Land aus?"] },
+            { id: 7, title: "Schule und Ausbildung", questions: ["Welche Schulfächer mochtest du als Kind?", "Ist ein Universitätsstudium heute zwingend notwendig?", "Wie findest du das Schulsystem in deinem Heimatland?"] },
+            { id: 8, title: "Sprache und Kommunikation", questions: ["Warum genau lernst du Deutsch?", "Wie wichtig ist Körpersprache bei der Kommunikation?", "Werden wir in Zukunft nur noch über Bildschirme kommunizieren?"] },
+            { id: 9, title: "Reisen und Urlaub", questions: ["Wo machst du am liebsten Urlaub (Meer, Berge, Stadt)?", "Reist du lieber allein oder in einer großen Gruppe?", "Was sind die Nachteile von Massentourismus?"] },
+            { id: 10, title: "Gesundheit und Körperpflege", questions: ["Was tust du aktiv für deine Gesundheit?", "Ist das Gesundheitssystem in deinem Land gut organisiert?", "Warum ist Stress heutzutage ein so großes Problem?"] },
+            { id: 11, title: "Konsum", questions: ["Kaufst du lieber online oder im echten Geschäft ein?", "Spielt Werbung eine große Rolle bei deinen Kaufentscheidungen?", "Brauchen wir in unserer Gesellschaft wirklich so viele Dinge?"] },
+            { id: 12, title: "Mode und Aussehen", questions: ["Ist Mode ein wichtiges Thema für dich?", "Glaubst du, dass Kleidung unseren beruflichen Erfolg beeinflusst?", "Was hältst du von Schuluniformen?"] },
+            { id: 13, title: "Essen und Trinken", questions: ["Was ist dein absolutes Lieblingsessen?", "Ist gesundes Essen deiner Meinung nach zu teuer?", "Wie hat sich die Esskultur in deinem Land in den letzten Jahren verändert?"] },
+            { id: 14, title: "Verkehr und Dienstleistungen", questions: ["Wie kommst du normalerweise zur Arbeit oder zur Schule?", "Sollten Autos in der Innenstadt komplett verboten werden?", "Funktioniert der öffentliche Verkehr in deinem Land gut?"] },
+            { id: 15, title: "Natur und Umwelt", questions: ["Was machst du ganz persönlich für den Umweltschutz?", "Denkst du, der Klimawandel ist das größte Problem unserer Zeit?", "Wie wichtig sind Grünanlagen und Parks in einer Großstadt?"] },
+            { id: 16, title: "IKT (Informationstechnologien)", questions: ["Welche Rolle spielen Smartphones in deinem täglichen Leben?", "Ist Künstliche Intelligenz eine Gefahr oder eine Hilfe?", "Wie sicher sind unsere persönlichen Daten im Internet?"] },
+            { id: 17, title: "Ehrenamt und Solidarität", questions: ["Hast du schon einmal ehrenamtlich gearbeitet?", "Warum sollten wir anderen Menschen in der Gesellschaft helfen?", "Ist Solidarität heute noch wichtig?"] }
+        ];
+
+        // Inicialización
+        function initThemes() {
+            const list = document.getElementById('theme-list');
+            THEMES.forEach(theme => {
+                const btn = document.createElement('button');
+                btn.className = "w-full text-left p-3 mb-2 bg-white border-4 border-black hover:bg-[var(--toon-cyan)] hover:-translate-y-1 transition-transform font-bold text-lg text-black";
+                btn.innerText = `💥 ${theme.title}`;
+                btn.onclick = () => selectTheme(theme, btn);
+                list.appendChild(btn);
+            });
+        }
+
+        function selectTheme(theme, btnElement) {
+            // Highlight selected
+            document.querySelectorAll('#theme-list button').forEach(b => b.classList.remove('bg-[var(--toon-magenta)]', 'text-white'));
+            btnElement.classList.add('bg-[var(--toon-magenta)]', 'text-white');
+            btnElement.classList.remove('hover:bg-[var(--toon-cyan)]');
+
+            document.getElementById('selected-theme-title').innerText = theme.title;
+            const qList = document.getElementById('questions-list');
+            qList.innerHTML = '';
+            theme.questions.forEach(q => {
+                const li = document.createElement('li');
+                li.innerText = q;
+                qList.appendChild(li);
+            });
+            resetRecorderState();
+        }
+
+        // Grabación y Reconocimiento de Voz
+        async function startRecording() {
+            const themeSelected = document.getElementById('selected-theme-title').innerText;
+            if(themeSelected === "Wähle links ein Thema aus") {
+                alert("ZAP! Du musst zuerst links ein Thema auswählen!");
+                return;
+            }
+
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                mediaRecorder = new MediaRecorder(stream);
+                audioChunks = [];
+                transcript = "";
+
+                mediaRecorder.ondataavailable = e => audioChunks.push(e.data);
+                mediaRecorder.onstop = () => {
+                    const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+                    audioUrl = URL.createObjectURL(audioBlob);
+                    document.getElementById('btn-play').disabled = false;
+                    document.getElementById('btn-feedback').disabled = false;
+                    
+                    // Stop mic access
+                    stream.getTracks().forEach(track => track.stop());
+                };
+
+                // Speech to Text Config
+                const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+                if (SpeechRecognition) {
+                    recognition = new SpeechRecognition();
+                    recognition.lang = 'de-DE';
+                    recognition.continuous = true;
+                    recognition.interimResults = false;
+                    recognition.onresult = (event) => {
+                        for (let i = event.resultIndex; i < event.results.length; ++i) {
+                            transcript += event.results[i][0].transcript + " ";
+                        }
+                        console.log("Transcripción en curso:", transcript);
+                    };
+                    recognition.onerror = (e) => console.log("Reconocimiento de voz error:", e.error);
+                    recognition.start();
+                }
+
+                mediaRecorder.start();
+                isRecording = true;
+                startTimer();
+
+                document.getElementById('btn-record').disabled = true;
+                document.getElementById('btn-record').classList.remove('bg-[var(--toon-green)]');
+                document.getElementById('btn-record').classList.add('bg-gray-400');
+                
+                document.getElementById('btn-stop').disabled = false;
+                document.getElementById('btn-stop').classList.remove('bg-gray-400');
+                document.getElementById('btn-stop').classList.add('bg-[var(--toon-magenta)]', 'animate-toon-bounce');
+
+            } catch (err) {
+                console.error("Mic access denied", err);
+                alert("BOOM! Du musst den Mikrofonzugriff erlauben, um aufzunehmen.");
+            }
+        }
+
+        function stopRecording() {
+            if (isRecording) {
+                mediaRecorder.stop();
+                if (recognition) recognition.stop();
+                clearInterval(timerInterval);
+                isRecording = false;
+
+                document.getElementById('btn-stop').disabled = true;
+                document.getElementById('btn-stop').classList.remove('bg-[var(--toon-magenta)]', 'animate-toon-bounce');
+                document.getElementById('btn-stop').classList.add('bg-gray-400');
+                
+                document.getElementById('btn-record').disabled = false;
+                document.getElementById('btn-record').classList.add('bg-[var(--toon-green)]');
+                document.getElementById('btn-record').classList.remove('bg-gray-400');
+                
+                document.getElementById('btn-feedback').classList.add('animate-toon-bounce');
+            }
+        }
+
+        function playRecording() {
+            if (audioUrl) {
+                const audio = new Audio(audioUrl);
+                audio.play();
+            }
+        }
+
+        // Temporizador
+        function startTimer() {
+            timeLeft = DURATION;
+            updateTimerUI();
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                updateTimerUI();
+                if (timeLeft <= 0) stopRecording();
+            }, 1000);
+        }
+
+        function updateTimerUI() {
+            const min = Math.floor(timeLeft / 60);
+            const sec = timeLeft % 60;
+            document.getElementById('timer-text').innerText = `${String(min).padStart(2, '0')}:${String(sec).padStart(2, '0')}`;
+            
+            // Bar shrinks
+            const percentage = timeLeft / DURATION;
+            document.getElementById('timer-bar').style.transform = `scaleX(${percentage})`;
+            
+            if (timeLeft < 30) {
+                document.getElementById('timer-text').classList.add('text-[var(--toon-magenta)]', 'animate-pulse');
+            } else {
+                document.getElementById('timer-text').classList.remove('text-[var(--toon-magenta)]', 'animate-pulse');
+            }
+        }
+
+        function resetRecorderState() {
+            clearInterval(timerInterval);
+            timeLeft = DURATION;
+            updateTimerUI();
+            transcript = "";
+            document.getElementById('btn-play').disabled = true;
+            document.getElementById('btn-feedback').disabled = true;
+            document.getElementById('btn-feedback').classList.remove('animate-toon-bounce');
+            document.getElementById('feedback-section').classList.add('hidden');
+        }
+
+        // Feedback con Gemini basado en Rúbrica (Prompt traducido a alemán)
+        async function getFeedback() {
+            const feedbackSection = document.getElementById('feedback-section');
+            const feedbackLoading = document.getElementById('feedback-loading');
+            const feedbackContent = document.getElementById('feedback-content');
+            
+            document.getElementById('btn-feedback').classList.remove('animate-toon-bounce');
+            feedbackSection.classList.remove('hidden');
+            feedbackLoading.classList.remove('hidden');
+            feedbackContent.innerHTML = "";
+            
+            // Scroll to feedback
+            feedbackSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+            const theme = document.getElementById('selected-theme-title').innerText;
+            
+            // Handle empty transcripts
+            let speechText = transcript.trim();
+            if(speechText.length < 10) {
+                speechText = "[Das System konnte die Sprache nicht klar erkennen. Möglicherweise wurde leise oder mit viel Hintergrundgeräuschen aufgenommen. Bewerte dies als gescheiterten Versuch oder gib allgemeine Tipps zur B1-Bewertung für dieses Thema].";
+            }
+
+            // PROMPT EN ALEMÁN
+            const systemPrompt = `Du bist ein super lustiger und exzentrischer Prüfer im "Looney Tunes"-Stil (benutze Ausdrücke wie BAM!, KAPOW!, ZAPP!), aber bei der Bewertung bist du STRENG UND GENAU.
+            
+            Bewerte den folgenden Monolog eines B1-Deutschschülers zum Thema "${theme}".
+            Erkannte Transkription: "${speechText}"
+
+            Du musst deine Bewertung EXAKT auf die 4 Kriterien der "offiziellen Bewertungsskala für die mündliche Produktion (Mittelstufe B1)" stützen.
+            Bewerte jedes Kriterium mit maximal 2.5 Punkten (Gesamt: 10 Punkte).
+
+            EXAKTE Struktur deiner Antwort im HTML-Format (verwende TailwindCSS-Klassen, damit es auf dem schwarzen Hintergrund bunt aussieht):
+            
+            <h3 class="text-3xl bangers-font text-[var(--toon-cyan)] mt-4">GESAMTPUNKTZAHL: [Summe]/10 🌟</h3>
+            
+            <div class="bg-white text-black p-4 border-4 border-black rounded mt-4">
+                <h4 class="text-2xl bangers-font text-[var(--toon-magenta)]">1. KOMMUNIKATIVE WIRKSAMKEIT ([Punkte]/2.5)</h4>
+                <p><strong>Offizielles Kriterium:</strong> Erreicht er/sie das Ziel? Gibt er/sie genug Informationen? Passt es zur Aufgabe?</p>
+                <p><strong>Deine Analyse:</strong> [Erkläre, ob das Thema gut entwickelt wurde, ob Inhalte fehlten usw.]</p>
+            </div>
+
+            <div class="bg-white text-black p-4 border-4 border-black rounded mt-4">
+                <h4 class="text-2xl bangers-font text-[var(--toon-orange)]">2. DISKURSORGANISATION UND FLÜSSIGKEIT ([Punkte]/2.5)</h4>
+                <p><strong>Offizielles Kriterium:</strong> Kohärenz, Verwendung von Konnektoren (Übergänge), flüssiger Diskurs.</p>
+                <p><strong>Deine Analyse:</strong> [Analysiere, ob der Diskurs strukturiert war und ob Wörter wie 'weil', 'obwohl', 'zuerst' gut verwendet wurden.]</p>
+            </div>
+
+            <div class="bg-white text-black p-4 border-4 border-black rounded mt-4">
+                <h4 class="text-2xl bangers-font text-[var(--toon-green)]">3. SPRACHLICHER REICHTUM ([Punkte]/2.5)</h4>
+                <p><strong>Offizielles Kriterium:</strong> Großer Wortschatz zum Thema, Risikobereitschaft, syntaktische Vielfalt.</p>
+                <p><strong>Deine Analyse:</strong> [Schlage konkretes B1-Vokabular vor, das zur Verbesserung hätte verwendet werden können, und analysiere den verwendeten Wortschatz.]</p>
+            </div>
+
+            <div class="bg-white text-black p-4 border-4 border-black rounded mt-4">
+                <h4 class="text-2xl bangers-font text-blue-600">4. SPRACHLICHE KORREKTHEIT UND AUSSPRACHE ([Punkte]/2.5)</h4>
+                <p><strong>Offizielles Kriterium:</strong> Morphologie, Syntax (Verbposition!), Korrektheit des Wortschatzes und Aussprache (bewerte die Klarheit, mit der der Text transkribiert wurde).</p>
+                <p><strong>Deine Analyse:</strong> [Korrigiere die spezifischen grammatikalischen Fehler, die in der Transkription gefunden wurden. Weise ausdrücklich auf Fehler bei der Verbposition hin, falls vorhanden.]</p>
+            </div>
+            
+            <p class="text-2xl font-bold text-[var(--toon-yellow)] mt-6 text-center">Übe weiter, gib nicht auf! KABOOM! 💥</p>
+            
+            Gib AUSSCHLIESSLICH den HTML-Code zurück, ohne \`\`\`html Blöcke. Der GESAMTE Text muss auf DEUTSCH sein.`;
+
+            try {
+                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ contents: [{ parts: [{ text: systemPrompt }] }] })
+                });
+
+                const data = await response.json();
+                let htmlOutput = data.candidates?.[0]?.content?.parts?.[0]?.text || "<p>ZONK! Fehler beim Laden des Feedbacks.</p>";
+                
+                // Remove markdown code blocks if AI added them
+                htmlOutput = htmlOutput.replace(/```html/g, '').replace(/```/g, '');
+
+                feedbackLoading.classList.add('hidden');
+                feedbackContent.innerHTML = htmlOutput;
+
+            } catch (err) {
+                console.error(err);
+                feedbackLoading.classList.add('hidden');
+                feedbackContent.innerHTML = "<p class='text-red-500 text-3xl'>KAPOW! Verbindungsfehler mit dem KI-Gehirn. Versuch es noch einmal.</p>";
+            }
+        }
+
+        function resetApp() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            setTimeout(() => location.reload(), 500);
+        }
+
+        // Arrancar app
+        window.onload = () => {
+            initThemes();
+        };
+    </script>
+</body>
+</html>
